@@ -1,0 +1,40 @@
+.rightContent {
+	height: 650px;
+}
+
+.toVoiceTitle {
+	color: #0077CC;
+	font-size: 30px;
+	font-family: Arial, ​Liberation Sans, ​DejaVu Sans, ​sans-serif,黑体;
+}
+
+.subTitle {
+	color: black;
+	font-size: 20px;
+	padding-bottom: 5px;
+}
+
+
+tr.comment>td {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	border-bottom: dotted 1px #DDD;
+}
+
+.voteFor{
+	background-color: #0077DD;
+    border-radius: 3px 3px 3px 3px;
+    color: #FFFFFF !important;
+    font-size: 90%;
+    font-weight: bold;	
+    padding: 2px 5px 2px 4px;
+    line-height: 125%;
+    cursor: pointer;
+}
+
+#comment_tip{
+	font-size: 12px;
+	position: relative;
+	left:50px;	
+	color: red;
+}

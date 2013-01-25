@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE urlrewrite
+    PUBLIC "-//tuckey.org//DTD UrlRewrite 4.0//EN"
+    "http://www.tuckey.org/res/dtds/urlrewrite4.0.dtd">
+
+<urlrewrite default-match-type="wildcard">
+    
+    <rule>
+        <from>/voicelist/*.htm</from>
+        <to>viewVoices?category=$1</to>
+    </rule>
+    
+    <rule>
+        <from>/newVoice/*.htm</from>
+        <to>newVoice?category=$1</to>
+    </rule>
+    
+	<rule>
+        <from>/viewVoices/*/*.htm</from>
+        <to>viewVoices?category=$1&amp;pageNo=$2</to>
+    </rule>
+
+	<rule>
+        <from>/showVoicesDetail/*.htm</from>
+        <to>/viewVoices/showVoicesDetail?id=$1</to>
+    </rule>
+    
+	<rule>
+        <from>/showVoicesDetail/v*/*/*.htm</from>
+        <to>/showVoicesDetail?id=$1&amp;category=$2&amp;pageNo=$3</to>
+    </rule>
+
+</urlrewrite>

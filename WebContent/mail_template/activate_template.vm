@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Activate Your Access to EmCare</title>
+</head>
+<style>
+body{
+font-family:Calibri;
+}
+</style>
+<body>
+<p>Dear ${user.realname} :</p>
+
+<p>Welcome to R&D Excellence EmCare System, you're almost done! </p>
+
+<a href="${basePath}/activate?authCode=${code}">Click here to complete your access right on Emcare </a> 
+
+<p>Once activate your access right you can visit EmCare without username and password!</p>
+<p>If the link doesn't works for your browser, please copy-paste the below link in your browser: <br>
+	<a href="${basePath}/activate?authCode=${code}">${basePath}/activate?authCode=${code}<a>
+</p>
+
+
+<p style="font-size: 12px;color: grey;">This is an automatic mail sent from EmCare server, please do not reply it!</p>
+
+</body>
+</html>

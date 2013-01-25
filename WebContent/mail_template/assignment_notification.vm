@@ -1,0 +1,29 @@
+<html>
+<head>
+<title>Assignment Notification</title>
+</head>
+<style>
+body{
+font-family: Arial,Helvetica,Trebuchet MS,Times,sans-serif,Times New Roman,sans-serif;
+}
+</style>
+<body>
+<p>
+Hello ${assignee.realname}, 
+</p>
+<p>
+${user.realname} has just assigned EmCare task to you.</p>
+Here is the comment from ${user.realname}: <br>
+<p style="color:grey">
+${ah.comments}
+</p>
+
+
+<p>
+you can see more detail information about the task in : </p>
+<a href="${basePath}/showVoicesDetail?id=${ah.voice.voiceId}"> EmCare </a> 
+
+
+<p style="font-size: 12px;color: grey;">This is an automatic mail sent from EmCare server, please do not reply it!</p>
+</body>
+</html>  

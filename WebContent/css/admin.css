@@ -1,0 +1,28 @@
+.userInfo {
+	background-color: #EEEEEE;
+	padding: 3px;
+	height: 23px;
+}
+
+.toCenter {
+	width: 820px;
+	margin: 0 auto;
+}
+
+body {
+	margin: 0px; 
+	background-image: url('../images/body_bg.jpg');	
+	background-repeat:repeat-x;
+}
+
+.navigator {
+	margin-top: 30px;
+}
+
+.welcome{
+	padding-top: 2px;
+	color: #0077CC;
+	font-weight: bolder;
+	font-size: 12px;
+	float: right;
+}

@@ -1,0 +1,179 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<constant name="struts.objectFactory" value="spring" />
+	<constant name="struts.devMode" value="false" />
+	
+
+	
+	<package name="default" extends="struts-default">
+			<interceptors>
+			<interceptor name="authentication"
+				class="com.company.emcare.interceptor.AuthenticationInterceptor">
+				<param name="excludeMethods">sendActivateRequest,executeActivate</param>
+			</interceptor>
+			<interceptor-stack name="emdefault">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="authentication" />
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="emdefault"></default-interceptor-ref>
+			
+		<global-results>
+			<result name="activation" type="redirect">authorize</result>
+		</global-results>
+			
+	    <action name="newVoice" class="newVoiceAction">
+	    	<result>/pages/jsp/giveVoice.jsp</result>
+	    </action>
+	    
+	     <action name="agree" class="voteVoiceAction" method="agree" />  
+	     <action name="disagree" class="voteVoiceAction" method="disagree" />  
+	    
+		<action name="saveVoice" class="saveVoiceAction">
+			<result name="success" type="redirect">/viewVoices</result>
+			<result name="input" type="chain">newVoice</result>
+		</action>
+		
+		<action name="viewVoices" class="viewVoicesAction">
+			<result type="dispatcher">/pages/jsp/main.jsp</result>
+		</action>
+		
+		<action name="login" class="loginAction" method="executeLogin">
+		    <result name="login" type="dispatcher">/login.jsp</result>
+			<result name="loginError" type="dispatcher">/login.jsp</result>
+			<result name="loginSuccess" type="redirect">/admin/dashboard</result>
+		</action>
+		
+		<action name="search" class="viewVoicesAction" method="executeSearch">
+			<result name="success">/pages/jsp/main.jsp</result>
+		</action>
+		
+		<action name="showVoicesDetail" class="showVoiceDetailAction">
+			<result>/pages/jsp/seeVoice.jsp</result>
+		</action>
+				
+		<action name="uploadImg" class="fileUploadAction" method="executeUpload" />
+		<action name="postVoiceComment" class="postVoiceCommentAction" method="postComment">
+			<result name="success" type="redirect">
+				showVoicesDetail/${voiceId}.htm
+			</result>
+		</action> 
+		<action name="postActiveRequest" class="activateAcessRightAction" method="sendActivateRequest">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+		<action name="activate" class="activateAcessRightAction" method="executeActivate">
+			<result>/pages/jsp/activate_success.jsp</result>
+		</action>
+		<action name="authorize" class="newAuthorizeAction">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<result name="success">/pages/jsp/authorize.jsp</result>
+			<result name="input">/pages/jsp/authorize_already.jsp</result>
+		</action>
+	</package>
+	
+	<package name="admin" extends="default" namespace="/admin">
+	
+		<interceptors>
+			<interceptor name="validation"
+				class="com.company.emcare.interceptor.LoginInterceptor">
+				<param name="excludeMethods">executeLogin</param>
+			</interceptor>
+			<interceptor-stack name="emdefault">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="validation" />
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="emdefault"></default-interceptor-ref>
+		<global-results>
+			<result name="input">/login.jsp</result>
+		</global-results>
+		
+		<action name="assignedToMe" class="voiceAdminAction" method="fetchVoicesAssignedToMe">
+			<result>/pages/jsp/handleVoice/assigned_item.jsp</result>
+		</action>
+		<action name="startVoiceProgress" class="voiceAdminAction" method="startVoiceProgress"></action>
+		<action name="assignVoice" class="voiceAdminAction" method="assgineVoice">
+			<result name="success">/pages/jsp/handleVoice/assign_success.jsp</result>
+			<result name="error">/pages/jsp/handleVoice/assign_error.jsp</result>
+		</action>
+		<action name="resolveVoice" class="voiceAdminAction" method="resolveVoice"></action>
+		<action name="rejectVoice" class="voiceAdminAction" method="rejectVoice">
+			<result type="redirectAction" name="success">handleVoice</result>
+		</action>
+		<action name="closeVoice" class="voiceAdminAction" method="closeVoice">
+			<result name="success" type="redirectAction">handleVoice!listSolvedVoices</result>
+		</action>
+		<action name="loadAssignPage" class="voiceAdminAction" method="assgine">
+			<result>/pages/jsp/handleVoice/assignPage.jsp</result>
+		</action>
+		
+		<action name="deleteVoice" class="voiceAdminAction" method="deleteVoice">
+			<result name="success" type="dispatcher">/pages/jsp/handleVoice/assignPage.jsp</result>
+		</action>
+		<action name="reOpenVoice" class="voiceAdminAction" method="reOpenVoice">
+			<result name="success" type="redirectAction">handleVoice!listClosedVoices</result>
+		</action>
+		<action name="dashboard">
+			<result>/pages/jsp/handleVoice/home.jsp</result>
+		</action>
+
+		<action name="getAllUser" class="userAction" method="getAllUsers" >
+		    <result name="success" type="dispatcher">/pages/sys_main/userList.jsp</result>
+		</action>
+
+		<action name="handleVoice" class="com.company.emcare.action.HandleVoiceAction">
+			<result name="success">/pages/jsp/handleVoice/new_item.jsp</result>
+			<result name="solvedVoices">/pages/jsp/handleVoice/solved_item.jsp</result>
+			<result name="closedVoices">/pages/jsp/handleVoice/closed_item.jsp</result>
+			<result name="searchVoices">/pages/jsp/handleVoice/search_item.jsp</result>
+			<result name="showVoiceDetail">/pages/jsp/handleVoice/showVoiceDetail.jsp</result>
+		</action>
+		
+		<action name="handleVoiceType" class="com.company.emcare.action.HandleVoiceTypeAction" method="handleVoiceType">
+			<result name="success">/pages/jsp/handleVoice/handleVoiceType.jsp</result>
+		</action>		
+		
+		<action name="deleteVoiceType" class="com.company.emcare.action.HandleVoiceTypeAction" method="deleteVoiceType">
+		</action>
+		
+		<action name="saveVoiceType" class="com.company.emcare.action.HandleVoiceTypeAction" method="saveVoiceType">
+			<result name="success" type="redirect">/admin/handleVoiceType</result>
+		</action>
+		
+		<action name="viewVoiceType" class="com.company.emcare.action.HandleVoiceTypeAction" method="viewVoiceType">
+			<result name="success" type="dispatcher">/pages/jsp/handleVoice/editVoiceType.jsp</result>
+		</action>
+		
+		<action name="updateVoiceType" class="com.company.emcare.action.HandleVoiceTypeAction" method="updateVoiceType">
+			<result name="success" type="redirect">/admin/handleVoiceType</result>
+			<result name="input" type="chain">viewVoiceType</result>
+		</action>
+		
+		
+		<action name="saveUser" class="userAction" method="saveUser">
+			<result name="success" type="redirect">/admin/getAllUser</result>
+		</action>
+		
+		<action name="deleteUser" class="userAction" method="deleteUser">
+			<result name="success" type="redirect">/admin/getAllUser</result>
+		</action>
+		<action name="generateAreaChart" class="chartReportAction" method="generateAreaChart"></action>
+		<action name="generatBarChart" class="chartReportAction" method="generatBarChart">
+		</action>
+		<action name="generatPieChart" class="chartReportAction" method="generatPieChart">
+		</action>
+
+		<action name="viewUser" class="userAction" method="viewUser">
+		 <result name="success" type="dispatcher">/pages/sys_main/editUser.jsp</result>
+		</action>
+		
+		<action name="udpateUser" class="userAction" method="udpateUser">
+			<result name="success" type="redirect">/admin/getAllUser</result>
+		</action>
+		<action name="changePassword" class="changePasswordAction">
+			<result>/pages/jsp/changepass.jsp</result>
+		</action>
+	</package>
+</struts>
