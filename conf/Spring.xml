@@ -14,9 +14,9 @@
 	
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-		<property name="url" value="jdbc:mysql://10.80.17.22:3306/emcare?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=UTF-8"/>
-		<property name="username" value="eedb_user"/>
-		<property name="password" value="eedb_password"/>
+		<property name="url" value="jdbc:mysql://******/emcare?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=UTF-8"/>
+		<property name="username" value="******"/>
+		<property name="password" value="******"/>
 	</bean>
 	
 	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
